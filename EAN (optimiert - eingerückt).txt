@@ -1,0 +1,246 @@
+{3211,2221,2122,1411,1132,1231,1114,1312,1213,3112,1123,1222,2212,1141,2311,1321,4111,2131,3121,2113,000000,001001,001101,001110,010011,011010,011100,010101,010110,011010}➙List 6⤶
+While 1⤶
+	ClrText⤶
+	" "⤶
+	" "⤶
+	" "⤶
+	" "⤶
+	" "⤶
+	Locate 1,1,"(1) BARCODE ➙ NUMBER"⤶
+	Locate 1,2,"(2) NUMBER ➙ BARCODE"⤶
+	Locate 1,3,"(3) CHECKDIGIT"⤶
+	Locate 1,5,"(0) CREDITS"⤶
+	?➙A⤶
+	A=1⥤Goto 1⤶
+	A=2⥤Goto 2⤶
+	A=3⥤Goto 3⤶
+WhileEnd⤶
+Lbl 0⤶
+ClrText⤶
+Locate 2,1,"(C) STEFAN HALLER"⤶
+Locate 17,2,"2009"⤶
+Locate 4,4,"THIS PROGRAM IS"⤶
+Locate 5,5,"FREE SOFTWARE"⤶
+Locate 2,6,"(LICENSE: GPL V. 3)"⤶
+Stop⤶
+Lbl 1⤶
+If (Dim List 1≠8) And (Dim List 1≠12)⤶
+	Then ClrText⤶
+	" "⤶
+	" "⤶
+	" "⤶
+	Locate 2,1,"Dim List 1 MUST BE"⤶
+	Locate 7,2,"8 OR 12!"⤶
+	Stop⤶
+IfEnd⤶
+If Dim List 1=8⤶
+	Then 1➙B⤶
+	8➙C⤶
+	Else 2➙B⤶
+	13➙C⤶
+IfEnd⤶
+Seq(-1,X,1,C,1)➙List 2⤶
+Seq(-1,X,1,C,1)➙List 3⤶
+For 1➙I To Dim List 1⤶
+	For 1➙J To 10⤶
+		If List 1[I]=List 6[J]⤶
+			Then J-1➙List 2[I+B-1]⤶
+			0➙List 3[I+B-1]⤶
+		IfEnd⤶
+		If List 1[I]=List 6[J+10]⤶
+			Then J-1➙List 2[I+B-1]⤶
+			1➙List 3[I+B-1]⤶
+		IfEnd⤶
+	Next⤶
+Next⤶
+If C=8⤶
+	Then 2➙D⤶
+	List 3[B]➙A⤶
+	Else 8➙D⤶
+	0➙A⤶
+IfEnd⤶
+For D➙I To C⤶
+	If List 3[I]≠A⤶
+		Then -1➙A⤶
+		Break⤶
+	IfEnd⤶
+Next⤶
+If A≠0⤶
+	Then If C=13⤶
+		Then 1➙A⤶
+		For 2➙I To 7⤶
+			If List 3[I]≠A⤶
+				Then -1➙A⤶
+				Break⤶
+			IfEnd⤶
+		Next⤶
+	IfEnd⤶
+	If A=1⤶
+		Then ClrText⤶
+		" "⤶
+		" "⤶
+		" "⤶
+		Locate 3,1,"DIRECTION WILL BE"⤶
+		Locate 5,2,"CORRECTED..."⤶
+		" "◢
+		List 2⤶
+		For B➙I To C⤶
+			List Ans[C+B-I]➙List 2[I]⤶
+		Next⤶
+		If C=8⤶
+			Then Seq(0,X,1,8,1)➙List 3⤶
+			Else List 3⤶
+			For 2➙I To 13⤶
+				List Ans[15-I]=0➙List 3[I]⤶
+			Next⤶
+		IfEnd⤶
+		Else ClrText⤶
+		" "⤶
+		" "⤶
+		" "⤶
+		Locate 2,1,"DIRECTION COULD NOT"⤶
+		Locate 5,2,"BE DETECTED!"⤶
+		Stop⤶
+	IfEnd⤶
+IfEnd⤶
+If C=13⤶
+	Then For 0➙I To 9⤶
+		List 6[I+21]➙A⤶
+		For 1➙J To 6⤶
+			Int (A÷10^(6-J))➙D⤶
+			A-D✕10^(6-J)➙A⤶
+			If D≠List 3[J+1]⤶
+				Then Break⤶
+			IfEnd⤶
+			If J=6⤶
+				Then I➙List 2[1]⤶
+				9➙I⤶
+			IfEnd⤶
+		Next⤶
+	Next⤶
+IfEnd⤶
+List➙Mat(2,3)◢
+Stop⤶
+Lbl 2⤶
+ClrGraph⤶
+CoordOff⤶
+GridOff⤶
+AxesOff⤶
+LabelOff⤶
+-63.5➙Xmin⤶
+63.5➙Xmax⤶
+0➙Xscl⤶
+13➙Ymax⤶
+-7➙Ymin⤶
+0➙Yscl⤶
+If (Dim List 1≠8) And (Dim List 1≠13)⤶
+	Then ClrText⤶
+	" "⤶
+	" "⤶
+	" "⤶
+	Locate 2,1,"Dim List 1 MUST BE"⤶
+	Locate 7,2,"8 OR 13!"⤶
+	Stop⤶
+IfEnd⤶
+If Dim List 1=8⤶
+	Then 30➙C⤶
+	4➙D⤶
+	Else 44➙C⤶
+	6➙D⤶
+	List 1[1]+21➙A⤶
+	List 6[A]➙A⤶
+	6➙Dim List 2⤶
+	For 1➙I To 6⤶
+		Int (A÷10^(6-I))➙B⤶
+		A-B✕10^(6-I)➙A⤶
+		B➙List 2[I]⤶
+	Next⤶
+IfEnd⤶
+F-Line -C-3,10,-C-3,-2⤶
+F-Line -C-1,10,-C-1,-2⤶
+F-Line -1,10,-1,-2⤶
+F-Line 1,10,1,-2⤶
+F-Line C+1,10,C+1,-2⤶
+F-Line C+3,10,C+3,-2⤶
+For 1➙L To 2⤶
+	For 1➙I To D⤶
+		If L=1⤶
+			Then -C+(7✕(I-1))➙X⤶
+			Else 3+(7✕(I-1))➙X⤶
+		IfEnd⤶
+		If D=4⤶
+			Then List 1[I+(L-1)✕D]+1➙A⤶
+			Else If (List 2[I]=0) Or (L=2)⤶
+				Then List 1[I+1+(L-1)✕D]+1➙A⤶
+				Else List 1[I+1+(L-1)✕D]+11➙A⤶
+			IfEnd⤶
+		IfEnd⤶
+		List 6[A]➙A⤶
+		For 1➙J To 4⤶
+			Int (A÷10^(4-J))➙B⤶
+			A-B✕10^(4-J)➙A⤶
+			For 1➙K To B⤶
+				If Frac((J+L)÷2)=0.5⤶
+					Then F-Line X,10,X,0⤶
+				IfEnd⤶
+				X+1➙X⤶
+			Next⤶
+		Next⤶
+	Next⤶
+Next⤶
+If D=6⤶
+	Then Text 44,11,List 1[1]⤶
+	1➙K⤶
+	Else 0➙K⤶
+IfEnd⤶
+For 1➙I To 2⤶
+	For 1➙J To D⤶
+		If I=1⤶
+			Then 64-C+(J-1)✕7+2➙X⤶
+			Else 64+3+(J-1)✕7+2➙X⤶
+		IfEnd⤶
+		Text 44,X,List 1[J+K+(I-1)✕D]⤶
+	Next⤶
+Next⤶
+Stop⤶
+Lbl 3⤶
+Dim List 1➙A⤶
+A=8⥤7➙A⤶
+A=13⥤12➙A⤶
+A=7⥤0.5➙B⤶
+A=12⥤0➙B⤶
+0➙C⤶
+If (A≠7) And (A≠12)⤶
+	ClrText⤶
+	" "⤶
+	" "⤶
+	" "⤶
+	Locate 2,1,"Dim List 1 MUST BE"⤶
+	Locate 5,2,"7,8,12 OR 13"⤶
+	Stop⤶
+IfEnd⤶
+For A➙I To 1 Step -1⤶
+	If Frac(I÷2)=B⤶
+		Then List 1[I]✕3+C➙C⤶
+		Else List 1[I]✕1+C➙C⤶
+	IfEnd⤶
+Next⤶
+(Int (C÷10+1)✕10)-C➙C⤶
+C=10⥤0➙C⤶
+ClrText⤶
+" "⤶
+" "⤶
+" "⤶
+Locate 5,1,"CHECKDIGIT:"⤶
+Locate 17,1,C⤶
+If (Dim List 1=8) Or (Dim List 1=13)⤶
+	Then If Dim List 1=8⤶
+		Then List 1[8]➙A⤶
+		Else List 1[13]➙A⤶
+	IfEnd⤶
+	If A=C⤶
+		Then Locate 4,3,"NUMBER CORRECT"⤶
+		Else Locate 2,3,"NUMBER NOT CORRECT"⤶
+	IfEnd⤶
+IfEnd⤶
+Stop
